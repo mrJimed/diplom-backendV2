@@ -1,0 +1,2 @@
+pip install Cython
+pip install nemo_toolkit['all']
