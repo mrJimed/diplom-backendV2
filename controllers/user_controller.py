@@ -3,7 +3,7 @@ from flask_login import login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from database import db
-from db_models.user import User
+from db_models.models import User
 
 user_controller = Blueprint('user_controller', __name__, url_prefix='/user')
 
@@ -22,7 +22,8 @@ def registration():
     db.session.commit()
     login_user(new_user)
     return {
-        'username': new_user.username
+        'username': new_user.username,
+        'email': new_user.email
     }
 
 
@@ -36,7 +37,8 @@ def authorization():
         return 'Неправильный email или пароль', 400
     login_user(user)
     return {
-        'username': user.username
+        'username': user.username,
+        'email': user.email
     }
 
 

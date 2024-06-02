@@ -4,8 +4,9 @@ from flask_login import LoginManager
 from controllers.history_controller import history_controller
 from controllers.annotation_controller import annotation_controller
 from controllers.user_controller import user_controller
+from controllers.file_controller import file_controller
 from database import db
-from db_models.user import User
+from db_models.models import User
 from settings import SECRET_KEY, DB_CONNECTION
 
 app = Flask(__name__)
@@ -15,6 +16,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = DB_CONNECTION
 app.register_blueprint(annotation_controller)
 app.register_blueprint(user_controller)
 app.register_blueprint(history_controller)
+app.register_blueprint(file_controller)
 
 db.init_app(app)
 
