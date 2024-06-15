@@ -7,13 +7,13 @@ from transformers import MBartTokenizer, MBartForConditionalGeneration
 
 
 class BartSummarizer:
-    def __init__(self):
+    def __init__(self): # Инициализация модели
         self._device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self._model_name = "IlyaGusev/mbart_ru_sum_gazeta"
         self._tokenizer = MBartTokenizer.from_pretrained(self._model_name)
         self._model = MBartForConditionalGeneration.from_pretrained(self._model_name).to(self._device)
 
-    def _summarize(self, text: str, max_length: float, min_length: float) -> str:
+    def _summarize(self, text: str, max_length: float, min_length: float) -> str: # Получение краткой текстовой аннотации отдельного чанка
         tokenized_text = self._tokenizer.encode(text, return_tensors="pt").to(self._device)
         max_tokens = int(max_length * tokenized_text.size(1))
         min_tokens = int(min_length * tokenized_text.size(1))
@@ -28,7 +28,7 @@ class BartSummarizer:
         )[0]
         return self._tokenizer.decode(output_ids, skip_special_tokens=True)
 
-    def _get_chunks_by_sentences(self, text: str, max_length: int) -> list[str]:
+    def _get_chunks_by_sentences(self, text: str, max_length: int) -> list[str]: # Разбиение, если имеются знаки окончания предложения
         sentences = sent_tokenize(text)
         chunks = []
         current_sentence = ''
@@ -45,7 +45,7 @@ class BartSummarizer:
                 chunks.append(current_sentence)
         return chunks
 
-    def _get_chunks_by_word(self, text: str, max_length: int) -> list[str]:
+    def _get_chunks_by_word(self, text: str, max_length: int) -> list[str]: # Разбиение, если отсутствуют знаки окончания предложения
         words = word_tokenize(text)
         chunks = []
         current_sentence = ''
@@ -60,12 +60,12 @@ class BartSummarizer:
             chunks[-1] += current_sentence
         return chunks
 
-    def _get_chunks(self, text: str, max_length: int) -> list[str]:
+    def _get_chunks(self, text: str, max_length: int) -> list[str]: # Разбиение текста на части
         if text in ['.', '!', '?']:
             return self._get_chunks_by_sentences(text, max_length)
         return self._get_chunks_by_word(text, max_length)
 
-    def summarize_text(self, text: str, max_length: float = 0.7, min_length: float = 0.4) -> str:
+    def summarize_text(self, text: str, max_length: float = 0.7, min_length: float = 0.4) -> str: # Получение краткой текстовой аннотации
         orig_text = re.sub(r'\s+', ' ', text)
         tokenized_text = self._tokenizer.encode(orig_text, return_tensors="pt").to(self._device)
         if tokenized_text.size(1) > 1024:
