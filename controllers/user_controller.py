@@ -22,7 +22,8 @@ def registration():
     db.session.commit()
     login_user(new_user)
     return {
-        'username': new_user.username
+        'username': new_user.username,
+        'email': new_user.email
     }
 
 
@@ -36,7 +37,8 @@ def authorization():
         return 'Неправильный email или пароль', 400
     login_user(user)
     return {
-        'username': user.username
+        'username': user.username,
+        'email': user.email
     }
 
 
