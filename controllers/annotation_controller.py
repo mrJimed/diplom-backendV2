@@ -29,7 +29,7 @@ def extractive():
             subject=f'Результат аннотирования для файла \"{file.filename}\"',
             text=annotation
         )
-    return 'annotation'
+    return annotation
 
 
 @annotation_controller.post('/abstractive')
