@@ -1,10 +1,7 @@
-import os
-import re
-import uuid
 from flask import Blueprint, request
-from werkzeug.datastructures.file_storage import FileStorage
 
 from services import email_service
+from services.file_service import save_file, get_path, remove_file, get_file_extension, is_correct_format, get_correct_formats
 from summarization.abstractive.bart_summarizer import BartSummarizer as bart
 from summarization.extractive.lex_rank_summarizer import LexRankSummarizer as lexrank
 from transcribation.demo import transcribation
@@ -12,30 +9,13 @@ from transcribation.demo import transcribation
 annotation_controller = Blueprint('annotation_controller', __name__, url_prefix='/annotation')
 
 
-def get_file_content(file: FileStorage):
-    return file.stream.read().decode("utf-8")
-
-
-def get_path(filename: str):
-    return os.path.join('upload', filename)
-
-
-def save_file(file: FileStorage):
-    extension = re.search(r'\.[\w\d]+$', file.filename).group()
-    new_filename = f'{uuid.uuid4()}{extension}'
-    path = get_path(new_filename)
-    file.save(path)
-    return new_filename
-
-
-def remove_file(filename: str):
-    os.remove(get_path(filename))
-
-
 @annotation_controller.post('/extractive')
 def extractive():
     file = request.files['file']
     top_n = int(request.form['topN'])
+
+    if (not is_correct_format(get_file_extension(file.filename))):
+        return f'Данный формат файла не поддерживается. Поддерживаемые форматы: {", ".join(get_correct_formats())}', 400
 
     filename = save_file(file)
     text = transcribation(get_path(filename))
@@ -49,7 +29,7 @@ def extractive():
             subject=f'Результат аннотирования для файла \"{file.filename}\"',
             text=annotation
         )
-    return annotation
+    return 'annotation'
 
 
 @annotation_controller.post('/abstractive')
@@ -57,6 +37,9 @@ def abstractive():
     file = request.files['file']
     max_length = int(request.form['maxLength']) / 100
     min_length = int(request.form['minLength']) / 100
+
+    if (not is_correct_format(get_file_extension(file.filename))):
+        return f'Данный формат файла не поддерживается. Поддерживаемые форматы: {", ".join(get_correct_formats())}', 400
     print(f'Abstractive summarization started (min_length={min_length}, max_length={max_length})')
 
     filename = save_file(file)
