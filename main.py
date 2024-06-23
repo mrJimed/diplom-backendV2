@@ -12,6 +12,7 @@ app = Flask(__name__)
 app.secret_key = SECRET_KEY
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_CONNECTION
 
+# внедрение контроллеров.
 app.register_blueprint(annotation_controller)
 app.register_blueprint(user_controller)
 app.register_blueprint(history_controller)
@@ -22,6 +23,7 @@ login_manager = LoginManager()
 login_manager.user_loader(lambda user_id: User.query.get(user_id))
 login_manager.init_app(app)
 
+# запуск серверной части.
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
