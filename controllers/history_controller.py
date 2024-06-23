@@ -4,6 +4,7 @@ from flask_login import current_user, login_required
 from database import db
 from db_models.annotation import Annotation
 
+# Контроллер для работы с историей аннотирования
 history_controller = Blueprint('history_controller', __name__, url_prefix='/history')
 
 

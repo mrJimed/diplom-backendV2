@@ -4,6 +4,7 @@ import uuid
 
 from werkzeug.datastructures.file_storage import FileStorage
 
+# Методы для работы с файлами: сохранение, удаление и тд
 
 def get_path(filename: str):
     return os.path.join('upload', filename)

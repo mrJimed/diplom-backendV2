@@ -7,7 +7,7 @@ from nltk import sent_tokenize, word_tokenize
 from nltk.corpus import stopwords
 from numpy.linalg import svd
 
-
+# реализация алгоритма LSA
 class LsaSummarizer:
     @staticmethod  # Суммаризация текста
     def summarize_text(text: str, top_n: int, lemmatize: bool = True) -> str:

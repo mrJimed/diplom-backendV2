@@ -7,7 +7,7 @@ import pymorphy3
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-
+# реализация алгоритма TF-IDF
 class TfidfSummarizer:
     @staticmethod  # Суммаризация текста
     def summarize_text(text: str, top_n: int, lemmatize: bool = True) -> str:

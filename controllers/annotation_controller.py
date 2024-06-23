@@ -6,6 +6,9 @@ from summarization.abstractive.bart_summarizer import BartSummarizer as bart
 from summarization.extractive.lex_rank_summarizer import LexRankSummarizer as lexrank
 from transcribation.demo import transcribation
 
+# Контроллер для работы с аннотированием
+
+
 annotation_controller = Blueprint('annotation_controller', __name__, url_prefix='/annotation')
 
 

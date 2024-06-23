@@ -6,7 +6,7 @@ import pymorphy3
 from nltk.corpus import stopwords
 from nltk.tokenize import sent_tokenize
 
-
+# реализация алгоритма TextRank
 class TextRankSummarizer:
     @staticmethod  # Суммаризация текста
     def summarize_text(text: str, top_n: int, lemmatize: bool = True) -> str:

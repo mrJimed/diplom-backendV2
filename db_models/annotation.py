@@ -5,7 +5,7 @@ from sqlalchemy.dialects.postgresql import UUID
 
 from database import db
 
-
+# модель для аннотации
 class Annotation(db.Model):
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=lambda: uuid.uuid4())
     create_ts = db.Column(db.TIMESTAMP, nullable=False, default=datetime.now)

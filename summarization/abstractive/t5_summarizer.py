@@ -5,7 +5,7 @@ import torch
 from nltk import sent_tokenize, word_tokenize
 from transformers import AutoTokenizer, T5ForConditionalGeneration
 
-
+# модуль для работы с mT5
 class T5Summarizer:
     def __init__(self):
         self._device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

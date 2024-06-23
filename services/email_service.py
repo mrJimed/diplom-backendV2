@@ -6,6 +6,7 @@ from email.utils import formataddr
 from settings import FROM_EMAIL, EMAIL_PASSWORD, SMTP_PORT, SMTP_HOST
 
 
+# метод для отправки сообщений на эл почту
 def send_email(to_email: str, subject: str, text: str):
     message = MIMEMultipart()
     message['From'] = formataddr(('Annotation', FROM_EMAIL))

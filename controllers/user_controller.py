@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from database import db
 from db_models.user import User
 
+# Контроллер для работы с пользователем (авторизация, регистрация, выход)
 user_controller = Blueprint('user_controller', __name__, url_prefix='/user')
 
 

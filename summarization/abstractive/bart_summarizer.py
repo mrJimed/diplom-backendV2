@@ -5,7 +5,7 @@ import torch
 from nltk import sent_tokenize, word_tokenize
 from transformers import MBartTokenizer, MBartForConditionalGeneration
 
-
+# модуль для работы с mBart
 class BartSummarizer:
     def __init__(self): # Инициализация модели
         self._device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

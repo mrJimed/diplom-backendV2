@@ -5,7 +5,7 @@ from sqlalchemy.dialects.postgresql import UUID
 
 from database import db
 
-
+# модель для пользователя
 class User(db.Model, UserMixin):
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=lambda: uuid.uuid4())
     username = db.Column(db.String, nullable=False)
